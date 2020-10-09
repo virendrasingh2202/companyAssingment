@@ -90,7 +90,7 @@ class Employee extends \yii\db\ActiveRecord
     public static function validParameters($params)
     {
         $condition = [];
-        if (count($condition) > 0) {
+        if (count($params) > 0) {
             $validArray = ['id','first_name', 'last_name', 'email', 'department_id', 'designation'];
             $validArray = array_intersect(array_keys($params), $validArray);
             foreach ($validArray as $key) {

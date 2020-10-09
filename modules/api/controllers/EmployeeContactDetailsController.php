@@ -9,10 +9,10 @@ class EmployeeContactDetailsController extends \yii\web\Controller
 {
     public $enableCsrfValidation = false;
 
-    public function actionIndex()
+    public function actionIndex($emp_id)
     {    	
     	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    	$model = EmployeeContactDetails::find()->where(['is_active' => 1])->all();
+    	$model = EmployeeContactDetails::find()->where(['emp_id' => $emp_id,'is_active' => 1])->all();
     	if(count($model) > 0){
     		return array('status' => true,'total' => count($model), 'data' => $model);
     	}

@@ -14,10 +14,10 @@ class DepartmentController extends \yii\web\Controller
     	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     	$model = Department::find()->where(['is_active' => 1])->all();
     	if(count($model) > 0){
-    		return array('total' => count($model), 'data' => $model);
+    		return array('total' => count($model), 'result' => $model);
     	}
     	else{
-    		return array('total' => 0, 'data' => 'No data found.');
+    		return array('total' => 0, 'result' => 'No data found.');
     	}
 
     }
@@ -34,10 +34,10 @@ class DepartmentController extends \yii\web\Controller
 
         $model = $this->findModel($id);
         if(isset($model)){
-    		return array('data' => $model);
+    		return array('result' => $model);
     	}
     	else{
-    		return array('data' => $model->getErrors());
+    		return array('result' => $model->getErrors());
     	}
     }
     
@@ -52,10 +52,10 @@ class DepartmentController extends \yii\web\Controller
     	$model = new Department();
         $model->attributes = Yii::$app->request->post();      
         if ($model->validate() && $model->save()) {
-            return array('status' => true, 'message' => 'Department created successfully');
+            return array('status' => true, 'result' => 'Department created successfully');
         }else
         {
-        	return array('status' => false, 'message' => $model->getErrors());
+        	return array('status' => false, 'result' => $model->getErrors());
         }
 
     }
@@ -73,10 +73,10 @@ class DepartmentController extends \yii\web\Controller
         $model = $this->findModel($id);       
         $model->attributes = Yii::$app->request->post();
         if ($model->validate() && $model->save()) {
-  	        return array('status' => true, 'message' => 'Department updated successfully');
+  	        return array('status' => true, 'result' => 'Department updated successfully');
   	    }else
         {
-        	return array('status' => false, 'message' => $model->getErrors());
+        	return array('status' => false, 'result' => $model->getErrors());
         }
     }
 
@@ -93,10 +93,10 @@ class DepartmentController extends \yii\web\Controller
         $model = $this->findModel($id);        
         $model->is_active = 0;  
         if ($model->save()) {
-            return array('status' => true, 'data' => 'Record Deleted.');
+            return array('status' => true, 'result' => 'Record Deleted.');
         }else
         {
-        	return array('status' => false, 'data' => $model->getErrors());
+        	return array('status' => false, 'result' => $model->getErrors());
         }
     }
 
