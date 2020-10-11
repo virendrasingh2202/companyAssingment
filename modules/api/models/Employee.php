@@ -69,13 +69,13 @@ class Employee extends \yii\db\ActiveRecord
     {
         $params = Yii::$app->request->queryParams;
 
-        $perPage = $params['per-page'] ?? 0;
+        $perPage = $params['per-page'] ?? 10;
         $page = $params['page'] ?? 0;
         $params = self::validParameters($params);
         $params[self::tableName().'.is_active'] = 1; 
         
         $data = Employee::find()
-        ->joinWith('contacts')
+        ->with('contacts')
         ->where($params)        
         ->asArray()
         ->all();
