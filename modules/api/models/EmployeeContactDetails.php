@@ -32,6 +32,7 @@ class EmployeeContactDetails extends \yii\db\ActiveRecord
         return [
             [['emp_id', 'phone', 'address'], 'required'],
             [['id', 'emp_id', 'is_active'], 'integer'],
+            [['id', 'emp_id', 'is_active'], 'safe'],
             [['address'], 'string'],
             [['phone'], 'string', 'max' => 20],
         ];

@@ -4,6 +4,7 @@ namespace app\modules\api\models;
 
 use Yii;
 use yii\data\ArrayDataProvider;
+use app\modules\api\models\EmployeeContactDetails;
 
 /**
  * This is the model class for table "employee".
@@ -71,9 +72,13 @@ class Employee extends \yii\db\ActiveRecord
         $perPage = $params['per-page'] ?? 0;
         $page = $params['page'] ?? 0;
         $params = self::validParameters($params);
-        $params['is_active'] = 1; 
+        $params[self::tableName().'.is_active'] = 1; 
         
-        $data = Employee::find()->where($params)->asArray()->all();
+        $data = Employee::find()
+        ->joinWith('contacts')
+        ->where($params)        
+        ->asArray()
+        ->all();
         $provider = new ArrayDataProvider([
           'allModels' => $data,
           'pagination' => [
@@ -99,5 +104,11 @@ class Employee extends \yii\db\ActiveRecord
         }
 
         return $condition;
+    }
+
+    public function getContacts()
+    {
+      return $this->hasMany(EmployeeContactDetails::className(), ['emp_id' => 'id' ])
+      ->andWhere([EmployeeContactDetails::tableName().'.is_active' => 1]);
     }
 }
